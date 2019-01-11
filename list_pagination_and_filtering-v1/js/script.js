@@ -37,6 +37,7 @@ let page = 1;
        "invoke" the function
 ***/
 
+
 const showPage = (list,page) => {
   const pageMin = page * 10 - 10;
   const pageMax = page * 10;
@@ -49,20 +50,21 @@ const showPage = (list,page) => {
       listItem.style.display = "none";
     }
   }
-
-  appendPageLinks(list);
+  appendPageLinks(list,page);
 }
+
 
 /***
    Create the `appendPageLinks function` to generate, append, and add
    functionality to the pagination buttons.
 ***/
 
-const appendPageLinks = (list) => {
-  const div = document.createElement('div','className','pagination');
-  const pageList = document.createElement('ul');
+const appendPageLinks = (list,page) => {
+  const pageDiv = document.querySelector('.page');
+  const div = document.createElement('div');
+  div.className = 'pagination';
+  const ul = document.createElement('ul');
   const numPages = Math.ceil(list.length/10);
-
 
   function createElement(elementName, property, value) {
     const element = document.createElement(elementName);
@@ -70,29 +72,24 @@ const appendPageLinks = (list) => {
     return element;
   }
 
-  function appendToPageList (value) {
+  for(let i =0; i<numPages; i++){
     const li = createElement('li');
-    const link = createElement('a','href','#');
-    link.textContent = value;
-    link.style.display="";
+    const a = createElement('a','href','#');
+    a.textContent = i + 1;
 
-    if(value == 1) {
-      link.className = 'active';
-    } else {
-      link.className = "";
+    if(i ==(page-1) ) {
+      a.className = 'active';
     }
-    li.appendChild(link);
-    return li;
+
+    li.appendChild(a);
+    ul.appendChild(li);
+    div.appendChild(li);
   }
 
-  for(let i = 0; i < numPages; i++){
-    const pageButton = appendToPageList(i+1);
-    pageList.appendChild(pageButton);
-  }
-
-  div.appendChild(pageList);
-  document.body.appendChild(div);
-
+  pageDiv.appendChild(div);
+  console.log(pageDiv);
 }
+
+document.addEventListener('DOMContentLoaded',(e) => {showPage(list,page)});
 
 // Remember to delete the comments that came with this file, and replace them with your own code comments.
