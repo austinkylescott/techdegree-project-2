@@ -57,7 +57,6 @@ const appendPageLinks = (list) => {
 
   //Selects links to be manipulated in event listener
   const links = ul.getElementsByTagName('a');
-  console.log(links);
 
   /*Event listener to change all pagination links to inactive
     and make the clicked link active. Then shows the page for the selected link.*/
@@ -75,13 +74,13 @@ const appendPageLinks = (list) => {
 const searchFunction = (list) => {
 
   //Creates div to hold search input and button
-  const searchDiv = document.createElement('div');
+  const searchDiv = document.createElement('form');
   searchDiv.className = "student-search";
 
   //input
-  const placeholder = document.createElement('input');
-  placeholder.value = "Search for students...";
-  searchDiv.appendChild(placeholder);
+  const searchBar = document.createElement('input');
+  searchBar.value = "Search for students...";
+  searchDiv.appendChild(searchBar);
 
   //Search button
   const searchButton = document.createElement('button');
@@ -92,15 +91,32 @@ const searchFunction = (list) => {
   const header = document.querySelector('.page-header');
   header.appendChild(searchDiv);
 
-  searchButton.addEventListener('click', (event) => {
-    
+  searchDiv.addEventListener('submit', (event) => {
+    event.preventDefault();   //Prevents page from refreshing when search is performed
 
+    const pageLinks = document.getElementsByClassName('pagination');
+    document.removeNode(pageLinks); //remove old links from page
+
+    const search = searchBar.value.toLowerCase();
+    console.log(search);
+    const newList = list;
+    console.log(newList);
+    for(let i = 0; i<list.length; i++) {
+      const recordName = list[i].querySelector('h3').textContent.toLowerCase();
+      if(!recordName.includes(search)){
+        newList[i].parentNode.removeChild(newList[i]);
+      }
+    }
+    console.log(newList);
+    showPage(newList,firstPage);
+    appendPageLinks(newList);
+    searchBar.value = "Search for students...";
   });
 
 }
 showPage(list, firstPage);  //Shows the first page
 appendPageLinks(list);  //adds pagination links
-searchFunction(list);
+searchFunction(list);   //adds search functionality
 
 
 // Remember to delete the comments that came with this file, and replace them with your own code comments.
