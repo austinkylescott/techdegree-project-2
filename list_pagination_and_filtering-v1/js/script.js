@@ -71,6 +71,8 @@ const appendPageLinks = (list) => {
   });
 };
 
+/***
+Search functionality is not currently working. Need to determine way to manipulate original list and create a new one.
 const searchFunction = (list) => {
 
   //Creates div to hold search input and button
@@ -95,7 +97,7 @@ const searchFunction = (list) => {
     event.preventDefault();   //Prevents page from refreshing when search is performed
 
     const pageLinks = document.getElementsByClassName('pagination');
-    document.removeNode(pageLinks); //remove old links from page
+    pageLinks.parentNode.removeChild(pageLinks);
 
     const search = searchBar.value.toLowerCase();
     console.log(search);
@@ -112,11 +114,10 @@ const searchFunction = (list) => {
     appendPageLinks(newList);
     searchBar.value = "Search for students...";
   });
+};
+***/
 
-}
+//PAGE SETUP
 showPage(list, firstPage);  //Shows the first page
 appendPageLinks(list);  //adds pagination links
-searchFunction(list);   //adds search functionality
-
-
-// Remember to delete the comments that came with this file, and replace them with your own code comments.
+//searchFunction(list);   //adds search functionality
